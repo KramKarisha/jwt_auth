@@ -1,6 +1,7 @@
 const userService = require('../service/user-service')
 const { validationResult } = require('express-validator')
 const ApiError = require('../exceptions/api-error')
+const UserDto = require('../dtos/user-dto')
 
 
 class UserController {
@@ -66,7 +67,8 @@ class UserController {
 	async getUsers(req, res, next) {
 		try {
 			const users = await userService.getAllUsers()
-			return res.json(users)
+			const usersDto = users.map(user => new UserDto(user))
+			return res.json(usersDto)
 		} catch (e) {
 			next(e)
 		}

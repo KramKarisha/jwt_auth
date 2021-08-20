@@ -22,6 +22,8 @@ class UserService {
 		await mainService.sendActivationMail(email, `${process.env.API_URL}/api/activate/${activationLink}`)
 
 		const userDto = new UserDto(user)
+		console.log(user)
+		console.log(userDto)
 		const tokens = tokenService.generateTokens({ ...userDto })
 		await tokenService.saveToken(userDto.id, tokens.refreshToken)
 
